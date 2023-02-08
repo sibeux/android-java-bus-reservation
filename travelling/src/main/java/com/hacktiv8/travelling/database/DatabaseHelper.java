@@ -9,10 +9,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "db_travel";
+    public static final String DATABASE_NAME = "db_travel_v2";
     public static final String TABLE_USER = "tb_user";
     public static final String COL_USERNAME = "username";
     public static final String COL_PASSWORD = "password";
+    public static final String COL_PHONE = "phone";
+
     public static final String COL_NAME = "name";
     public static final String TABLE_BOOK = "tb_book";
     public static final String COL_ID_BOOK = "id_book";
@@ -36,16 +38,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("PRAGMA foreign_keys=ON");
-        db.execSQL("create table " + TABLE_USER + " (" + COL_USERNAME + " TEXT PRIMARY KEY, " + COL_PASSWORD +
-                " TEXT, " + COL_NAME + " TEXT)");
-        db.execSQL("create table " + TABLE_BOOK + " (" + COL_ID_BOOK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_USER + " (" + COL_USERNAME + " TEXT PRIMARY KEY, " + COL_PASSWORD +
+                " TEXT, " + COL_NAME + " TEXT, " + COL_PHONE + " TEXT)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_BOOK + " (" + COL_ID_BOOK + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_ASAL + " TEXT, " + COL_TUJUAN + " TEXT" + ", " + COL_TANGGAL + " TEXT, " + COL_DEWASA + " TEXT, "
                 + COL_ANAK + " TEXT)");
-        db.execSQL("create table " + TABLE_HARGA + " (" + COL_USERNAME + " TEXT, " + COL_ID_BOOK + " INTEGER, " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_HARGA + " (" + COL_USERNAME + " TEXT, " + COL_ID_BOOK + " INTEGER, " +
                 COL_HARGA_DEWASA + " TEXT, " + COL_HARGA_ANAK + " TEXT, " + COL_HARGA_TOTAL +
                 " TEXT, FOREIGN KEY(" + COL_USERNAME + ") REFERENCES " + TABLE_USER
                 + ", FOREIGN KEY(" + COL_ID_BOOK + ") REFERENCES " + TABLE_BOOK + ")");
-        db.execSQL("insert into " + TABLE_USER + " values ('azhar@gmail.com','azhar','Azhar Rivaldi');");
+        db.execSQL("insert into " + TABLE_USER + " values ('azhar@gmail.com','azhar','Azhar Rivaldi','0895413386498');");
     }
 
     @Override
@@ -58,9 +60,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
     }
 
-    public boolean Register(String username, String password, String name) throws SQLException {
+    public boolean Register(String username, String password, String name, String phone) throws SQLException {
 
-        @SuppressLint("Recycle") Cursor mCursor = db.rawQuery("INSERT INTO " + TABLE_USER + "(" + COL_USERNAME + ", " + COL_PASSWORD + ", " + COL_NAME + ") VALUES (?,?,?)", new String[]{username, password, name});
+        @SuppressLint("Recycle") Cursor mCursor = db.rawQuery("INSERT INTO " + TABLE_USER + "(" + COL_USERNAME + ", " + COL_PASSWORD + ", " + COL_NAME + ", " + COL_PHONE + ") VALUES (?,?,?,?)", new String[]{username, password, name,phone});
         if (mCursor != null) {
             return mCursor.getCount() > 0;
         }

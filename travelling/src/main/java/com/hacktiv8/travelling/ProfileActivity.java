@@ -40,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {
             cursor.moveToPosition(0);
-            name = cursor.getString(2);
+            name = cursor.getString(3);
         }
 
         TextView lblName = findViewById(R.id.lblName);

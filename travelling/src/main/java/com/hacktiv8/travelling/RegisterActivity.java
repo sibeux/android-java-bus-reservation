@@ -55,8 +55,9 @@ public class RegisterActivity extends AppCompatActivity {
             password = txtPassword.getText().toString();
             try {
                 if (username.trim().length() > 0 && password.trim().length() > 0 && name.trim().length() > 0) {
+                    dbHelper.onUpgrade(db,1,2);
                     dbHelper.open();
-                    dbHelper.Register(username, password, name);
+                    dbHelper.Register(username, password, name,"0895413386498");
                     Toast.makeText(RegisterActivity.this, "Daftar berhasil", Toast.LENGTH_LONG).show();
                     finish();
                 } else {
