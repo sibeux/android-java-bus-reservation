@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.out);
         btnLogout.setOnClickListener(arg0 -> {
             AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("Anda yakin ingin keluar ?")
-                    .setPositiveButton("Ya", (dialog1, which) -> {
+                    .setTitle("Are you sure want to exit?")
+                    .setPositiveButton("Yes", (dialog1, which) -> {
                         finish();
                         session.logoutUser();
                     })
-                    .setNegativeButton("Tidak", null)
+                    .setNegativeButton("No", null)
                     .create();
             dialog.show();
         });
